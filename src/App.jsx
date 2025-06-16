@@ -1,5 +1,4 @@
-// src/App.jsx
-import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import { BrowserRouter as Router, Routes, Route, useNavigate } from "react-router-dom";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
@@ -13,7 +12,7 @@ import NotFound from "./pages/NotFound";
 
 // Páginas de usuario
 import Dashboard from "./pages/Dashboard";
-import Observaciones from "./pages/admin/AdminObservations"; // si luego quieres separar, muévela a pages/alumno/MyObservaciones
+import Observaciones from "./pages/admin/AdminObservations";
 
 // Páginas de administrador
 import Usuarios from "./pages/admin/UserList";
@@ -27,61 +26,67 @@ import PrivateRoute from "./components/PrivateRoute";
 import AdminRoute from "./components/AdminRoute";
 import AlumnoResumen from "./pages/alumno/AlumnoResumen";
 
-const App = () => {
+function AppWrapper() {
+  const navigate = useNavigate();
   const user = JSON.parse(localStorage.getItem("user"));
+
   const onLogout = () => {
+    // Limpia localStorage
     localStorage.removeItem("user");
     localStorage.removeItem("token");
-    window.location.href = "/login";
+    // Redirige al login
+    navigate("/login", { replace: true });
   };
 
   return (
+    <Routes>
+      {/* Rutas públicas */}
+      <Route path="/" element={<Home />} />
+      <Route path="/login" element={<Login />} />
+      <Route path="/register" element={<Register />} />
+      <Route path="/forgot-password" element={<ForgotPassword />} />
+      <Route path="/reset-password/:token" element={<ResetPassword />} />
+
+      {/* Layout para usuario (docente o alumno) */}
+      <Route 
+        path="/" 
+        element={
+          <PrivateRoute>
+            <UserLayout user={user} onLogout={onLogout} />
+          </PrivateRoute>
+        }
+      >
+        <Route path="dashboard" element={<Dashboard />} />
+        <Route path="observaciones" element={<Observaciones />} />
+        <Route path="seguimientos-alumno" element={<AlumnoResumen />} />
+        <Route path="seguimientos" element={<Seguimientos />} />
+      </Route>
+
+      {/* Layout para admin */}
+      <Route
+        path="/admin/*"
+        element={
+          <AdminRoute>
+            <AdminLayout user={user} onLogout={onLogout} />
+          </AdminRoute>
+        }
+      >
+        <Route index element={<AdminWelcome user={user} />} />
+        <Route path="usuarios" element={<Usuarios />} />
+        <Route path="seguimientos" element={<Seguimientos />} />
+        <Route path="observaciones" element={<Observaciones />} />
+      </Route>
+
+      {/* 404 */}
+      <Route path="*" element={<NotFound />} />
+    </Routes>
+  );
+}
+
+export default function App() {
+  return (
     <Router>
-      <Routes>
-        {/* Rutas públicas */}
-        <Route path="/" element={<Home />} />
-        <Route path="/login" element={<Login />} />
-        <Route path="/register" element={<Register />} />
-        <Route path="/forgot-password" element={<ForgotPassword />} />
-        <Route path="/reset-password/:token" element={<ResetPassword />} />
-
-        {/* Layout para usuario (docente o alumno) */}
-        <Route
-          path="/"
-          element={
-            <PrivateRoute>
-              <UserLayout user={user} onLogout={onLogout} />
-            </PrivateRoute>
-          }
-        >
-          <Route path="dashboard" element={<Dashboard />} />
-          {/* Ruta para que docentes/alumnos vean sus observaciones */}
-          <Route path="observaciones" element={<Observaciones />} />
-          <Route path="seguimientos-alumno" element={<AlumnoResumen />} />
-          <Route path="seguimientos" element={<Seguimientos />} />
-
-        </Route>
-
-        {/* Layout para admin */}
-        <Route
-          path="/admin/*"
-          element={
-            <AdminRoute>
-              <AdminLayout user={user} onLogout={onLogout} />
-            </AdminRoute>
-          }
-        >
-          <Route index element={<AdminWelcome user={user} />} />
-          <Route path="usuarios" element={<Usuarios />} />
-          <Route path="seguimientos" element={<Seguimientos />} />
-          {/* Ruta para que el admin vea todas las observaciones */}
-          <Route path="observaciones" element={<Observaciones />} />
-        </Route>
-
-        {/* 404 genérico */}
-        <Route path="*" element={<NotFound />} />
-      </Routes>
-
+      <AppWrapper />
       <ToastContainer
         position="top-right"
         autoClose={3000}
@@ -94,6 +99,4 @@ const App = () => {
       />
     </Router>
   );
-};
-
-export default App;
+}
