@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
 import axios from "axios";
 import { toast } from "react-toastify";
 import { FaEye, FaEyeSlash } from "react-icons/fa";
@@ -78,17 +78,22 @@ const Login = () => {
           </button>
         </form>
 
-        <div className="mt-6 text-center text-gray-700 space-y-2 text-sm">
+         <div className="mt-6 text-center text-gray-700 space-y-2 text-sm">
           <p>
-            <a href="/forgot-password" className="text-blue-600 hover:underline font-medium">
+            <Link
+              to="/forgot-password"
+              className="text-blue-600 hover:underline font-medium"
+            >
               ¿Olvidaste tu contraseña?
-            </a>
+            </Link>
           </p>
-          
           <p>
-            <a href="/" className="text-blue-600 hover:underline font-medium">
+            <Link
+              to="/"
+              className="text-blue-600 hover:underline font-medium"
+            >
               Volver al Home
-            </a>
+            </Link>
           </p>
         </div>
       </div>
