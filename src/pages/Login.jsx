@@ -84,12 +84,7 @@ const Login = () => {
               ¿Olvidaste tu contraseña?
             </a>
           </p>
-          <p>
-            ¿No tienes cuenta?{" "}
-            <a href="/register" className="text-blue-600 hover:underline font-medium">
-              Regístrate
-            </a>
-          </p>
+          
           <p>
             <a href="/" className="text-blue-600 hover:underline font-medium">
               Volver al Home
