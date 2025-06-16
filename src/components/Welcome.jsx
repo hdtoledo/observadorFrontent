@@ -1,5 +1,5 @@
 import React from "react";
-import observador from "../assets/logoobservadornegro.png";
+import observador from "../assets/logoObservadorNegro.png";
 
 const Welcome = ({ user }) => {
   return (
