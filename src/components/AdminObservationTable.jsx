@@ -4,7 +4,6 @@ import { FaSearch } from "react-icons/fa";
 
 const AdminObservationTable = ({
   observations,
-  onEdit,
   onDelete,
   searchTerm,
   setSearchTerm,
@@ -18,6 +17,7 @@ const AdminObservationTable = ({
         Lista de Observaciones
       </h2>
 
+      {/* Buscador */}
       <div className="relative max-w-sm mx-auto mb-6">
         <FaSearch className="absolute left-3 top-3 text-gray-400" />
         <input
@@ -29,6 +29,7 @@ const AdminObservationTable = ({
         />
       </div>
 
+      {/* Tabla */}
       <div className="overflow-x-auto">
         <table className="min-w-[700px] w-full text-sm text-left border-separate border-spacing-y-2">
           <thead>
@@ -41,37 +42,42 @@ const AdminObservationTable = ({
             </tr>
           </thead>
           <tbody>
-            {observations.map((o) => (
-              <tr
-                key={o._id}
-                className="bg-gray-50 hover:bg-gray-100 rounded transition"
-              >
-                <td className="px-4 py-3 font-medium text-gray-900">
-                  {o.estudiante.nombre} {o.estudiante.apellido}
-                </td>
-                <td className="px-4 py-3 text-gray-700 capitalize">
-                  {o.tipo}
-                </td>
-                <td className="px-4 py-3 capitalize text-gray-700">
-                  {o.estado}
-                </td>
-                <td className="px-4 py-3 text-gray-700">
-                  {o.creadoPor.nombre} {o.creadoPor.apellido}
-                </td>
-                <td className="px-4 py-3 text-center space-x-2">
-                  <button
-                    onClick={() => onDelete(o._id)}
-                    className="px-4 py-1 text-sm font-medium text-white bg-red-600 rounded hover:bg-red-700 transition"
-                  >
-                    Eliminar
-                  </button>
-                </td>
-              </tr>
-            ))}
+            {observations.map((o) => {
+              const alumno = o.estudiante || { nombre: "-", apellido: "" };
+              const creador = o.creadoPor || { nombre: "-", apellido: "" };
+              return (
+                <tr
+                  key={o._id}
+                  className="bg-gray-50 hover:bg-gray-100 rounded transition"
+                >
+                  <td className="px-4 py-3 font-medium text-gray-900">
+                    {alumno.nombre} {alumno.apellido}
+                  </td>
+                  <td className="px-4 py-3 text-gray-700 capitalize">
+                    {o.tipo}
+                  </td>
+                  <td className="px-4 py-3 capitalize text-gray-700">
+                    {o.estado}
+                  </td>
+                  <td className="px-4 py-3 text-gray-700">
+                    {creador.nombre} {creador.apellido}
+                  </td>
+                  <td className="px-4 py-3 text-center">
+                    <button
+                      onClick={() => onDelete(o._id)}
+                      className="px-4 py-1 text-sm font-medium text-white bg-red-600 rounded hover:bg-red-700 transition"
+                    >
+                      Eliminar
+                    </button>
+                  </td>
+                </tr>
+              );
+            })}
           </tbody>
         </table>
       </div>
 
+      {/* Paginación */}
       {totalPages > 1 && (
         <div className="mt-6 flex justify-center gap-2">
           {Array.from({ length: totalPages }, (_, i) => (

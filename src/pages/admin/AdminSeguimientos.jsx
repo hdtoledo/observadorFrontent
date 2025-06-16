@@ -18,7 +18,9 @@ const AdminSeguimientos = () => {
   // 1. Traer todas las observaciones
   const fetchObservaciones = async () => {
     try {
-      const { data } = await axios.get(`${import.meta.env.VITE_API_BASE_URL}/api/observaciones`);
+      const { data } = await axios.get(
+        `${import.meta.env.VITE_API_BASE_URL}/api/observaciones`
+      );
       setObservaciones(data);
     } catch {
       toast.error("Error al obtener observaciones");
@@ -43,17 +45,25 @@ const AdminSeguimientos = () => {
     await fetchObservaciones();
   };
 
-  // 4. Filtrado
+  // 4. Filtrado con guardias
   const filtered = observaciones.filter((obs) => {
     const term = search.toLowerCase();
+    const estName = obs.estudiante?.nombre?.toLowerCase() || "";
+    const estLast = obs.estudiante?.apellido?.toLowerCase() || "";
+    const tipo = obs.tipo?.toLowerCase() || "";
+    const desc = obs.descripcion?.toLowerCase() || "";
+    const estado = obs.estado?.toLowerCase() || "";
+    const crName = obs.creadoPor?.nombre?.toLowerCase() || "";
+    const crLast = obs.creadoPor?.apellido?.toLowerCase() || "";
+
     return (
-      obs.estudiante.nombre.toLowerCase().includes(term) ||
-      obs.estudiante.apellido.toLowerCase().includes(term) ||
-      obs.tipo.toLowerCase().includes(term) ||
-      obs.descripcion.toLowerCase().includes(term) ||
-      obs.estado.toLowerCase().includes(term) ||
-      obs.creadoPor.nombre.toLowerCase().includes(term) ||
-      obs.creadoPor.apellido.toLowerCase().includes(term)
+      estName.includes(term) ||
+      estLast.includes(term) ||
+      tipo.includes(term) ||
+      desc.includes(term) ||
+      estado.includes(term) ||
+      crName.includes(term) ||
+      crLast.includes(term)
     );
   });
 
@@ -76,7 +86,11 @@ const AdminSeguimientos = () => {
     <div className="min-h-screen bg-gray-100 p-4">
       {/* Cabecera */}
       <div className="max-w-6xl mx-auto bg-white rounded-xl shadow-md p-6 mb-6 flex items-center">
-        <img src={observador} alt="Observador Logo" className="h-10 mr-4" />
+        <img
+          src={observador}
+          alt="Observador Logo"
+          className="h-10 mr-4"
+        />
         <h1 className="text-2xl font-bold text-gray-800">
           Gestión de Seguimientos
         </h1>
