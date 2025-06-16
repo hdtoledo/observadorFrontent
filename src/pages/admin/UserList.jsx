@@ -5,7 +5,7 @@ import AdminUserTable from "../../components/AdminUserTable";
 import AdminEditUserModal from "../../components/AdminEditUserModal";
 import { toast } from "react-toastify";
 import Swal from "sweetalert2";
-import observador from "../../assets/logoobservadornegro.png";
+import observador from "../../assets/logoObservadorNegro.png";
 
 const UserList = () => {
   const [usuarios, setUsuarios] = useState([]);

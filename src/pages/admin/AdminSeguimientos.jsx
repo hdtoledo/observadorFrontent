@@ -4,7 +4,7 @@ import axios from "axios";
 import AdminObservationFollowUpTable from "../../components/AdminSeguimientoTable";
 import FollowUpModal from "../../components/FollowUpModal";
 import { toast } from "react-toastify";
-import observador from "../../assets/logoobservadornegro.png";
+import observador from "../../assets/logoObservadorNegro.png";
 
 const AdminSeguimientos = () => {
   const [observaciones, setObservaciones] = useState([]);

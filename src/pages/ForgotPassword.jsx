@@ -1,7 +1,7 @@
 import { useState } from "react";
 import axios from "axios";
 import { toast } from "react-toastify";
-import observador from "../assets/logoobservadornegro.png";
+import observador from "../assets/logoObservadorNegro.png";
 
 const ForgotPassword = () => {
   const [correo, setCorreo] = useState("");

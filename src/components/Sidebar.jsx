@@ -2,7 +2,7 @@
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { FaTimes, FaUser, FaBox, FaDashcube, FaChalkboardTeacher, FaClipboardList  } from "react-icons/fa";
-import observador from "../assets/logoobservadornegro.png";
+import observador from "../assets/logoObservadorNegro.png";
 
 const Sidebar = ({ user: propUser, onLogout, menuOpen, setMenuOpen }) => {
   const [user, setUser] = useState(propUser || null);

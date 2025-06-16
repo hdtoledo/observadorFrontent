@@ -3,7 +3,7 @@ import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import { toast } from "react-toastify";
 import { FaEye, FaEyeSlash } from "react-icons/fa";
-import observador from "../assets/logoobservadornegro.png";
+import observador from "../assets/logoObservadorNegro.png";
 
 const Login = () => {
   const [correo, setCorreo] = useState("");

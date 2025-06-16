@@ -5,7 +5,7 @@ import AdminObservationTable from "../../components/AdminObservationTable";
 import AdminObservationModal from "../../components/AdminObservationModal";
 import { toast } from "react-toastify";
 import Swal from "sweetalert2";
-import observador from "../../assets/logoobservadornegro.png";
+import observador from "../../assets/logoObservadorNegro.png";
 
 const AdminObservations = () => {
   const [observations, setObservations] = useState([]);
