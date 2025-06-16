@@ -1,0 +1,11 @@
+services:
+  # ------------ FRONTEND ------------
+  - type: static
+    name: observador-frontend
+    branch: master
+    rootDir: frontend-auth
+    buildCommand: npm install && npm run build
+    staticPublishPath: dist
+    envVars:
+      - key: VITE_API_BASE_URL
+        value: https://observador-backend.onrender.com
